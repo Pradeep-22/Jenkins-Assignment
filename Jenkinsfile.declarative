@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Pradeep-22/Jenkins-Assignment.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn -f MyWebApp/pom.xml clean package'
+            }
+        }
+        stage('Deploy to Tomcat') {
+            steps {
+                sh 'scp -o StrictHostKeyChecking=no MyWebApp/target/MyWebApp.war ubuntu@52.66.242.103:/opt/apache-tomcat-9.0.96/webapps/'
+            }
+        }
+    }
+    post {
+        success {
+            echo "Deployment successful!"
+        }
+        failure {
+            echo "Deployment failed."
+        }
+    }
+}
