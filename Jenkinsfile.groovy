@@ -16,11 +16,11 @@ node {
             echo "Starting deployment to Tomcat server"
             // Copy WAR file to remote server
             sh '''
-                scp -o StrictHostKeyChecking=no MyWebApp/target/MyWebApp.war ubuntu@52.66.242.103:/tmp/ || { echo "SCP failed"; exit 1; }
+                scp -o StrictHostKeyChecking=no MyWebApp/target/MyWebApp.war ubuntu@3.109.213.56:/tmp/ || { echo "SCP failed"; exit 1; }
             '''
             // Move WAR file to Tomcat's webapps directory with sudo
             sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@52.66.242.103 "sudo mv /tmp/MyWebApp.war /opt/apache-tomcat-9.0.96/webapps/" || { echo "SSH failed"; exit 1; }
+                ssh -o StrictHostKeyChecking=no ubuntu@3.109.213.56 "sudo mv /tmp/MyWebApp.war /opt/apache-tomcat-9.0.96/webapps/" || { echo "SSH failed"; exit 1; }
             '''
             echo "Deployment to Tomcat completed"
         }
